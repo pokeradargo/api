@@ -37,7 +37,7 @@ def format_response(lat, lng, response):
             "weather_icon": response['weather_icon']
         },
         "output": {
-
+            **response['predictions']
         }
     }
     response = app.response_class(

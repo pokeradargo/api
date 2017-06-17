@@ -3,17 +3,17 @@ from Domain.Services.TemperatureDefinitionService import TemperatureDefinitionSe
 from Domain.Services.WeatherIconDefinitionService import WeatherIconDefinitionService
 from Domain.Services.WindSpeedDefinitionService import WindSpeedDefinitionService
 
-from Infrastructure.Services.WeatherPreProcessingService import WeatherPreProcessingService
+from Infrastructure.Services.WeatherService import WeatherService
 
 
 class WeatherPreProcessingAction:
-    WeatherPreProcessingService = None
+    WeatherService = None
 
     def __init__(self):
-        self.WeatherPreProcessingService = WeatherPreProcessingService()
+        self.WeatherService = WeatherService()
 
     def run(self, lat, lng):
-        weather_data = self.WeatherPreProcessingService.get_weather_data(lat, lng)
+        weather_data = self.WeatherService.get_weather_data(lat, lng)
 
         temperature = TemperatureDefinitionService.get_temperature_definition(
             float(weather_data['temperature'])

@@ -1,7 +1,7 @@
 from Infrastructure.Services.CurlService import CurlService
 
 
-class WeatherPreProcessingService:
+class WeatherService:
     UrlService = 'https://api.darksky.net/forecast/'
     Token = 'token'
     CurlService = None
