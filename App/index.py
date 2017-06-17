@@ -1,4 +1,4 @@
-from Infrastructure.Services.WeatherPreProcessingService import WeatherPreProcessingService
+from Domain.Actions.PredictPokemonFromLocationAction import PredictPokemonFromLocationAction
 from flask import Flask, json, request
 app = Flask(__name__)
 
@@ -10,15 +10,15 @@ def mail():
     if (lat == '') or (lng == ''):
         return "Please Indicate a latitude and longitude in url 'http://localhost:5000/?lat=41.3929909&lng=2.1575654'"
 
-    weather_service = WeatherPreProcessingService()
-    weather = weather_service.pre_processing_weather(lat, lng)
+    predict_pokemon_from_location_action = PredictPokemonFromLocationAction()
+    response_action = predict_pokemon_from_location_action.run(lat, lng)
 
-    response = format_response(lat, lng, weather)
+    response = format_response(lat, lng, response_action.get_response())
 
     return response
 
 
-def format_response(lat, lng, weather):
+def format_response(lat, lng, response):
     data_response = {
         "input": {
             "lat": lat,
@@ -31,10 +31,10 @@ def format_response(lat, lng, weather):
             "continent": "America",
             "appeared_day_of_week": "dummy_day",
             "appeared_time_of_day": "night",
-            "temperature": weather['temperature'],
-            "pressure": weather['pressure'],
-            "wind_speed": weather['wind_speed'],
-            "weather_icon": weather['weather_icon']
+            "temperature": response['temperature'],
+            "pressure": response['pressure'],
+            "wind_speed": response['wind_speed'],
+            "weather_icon": response['weather_icon']
         },
         "output": {
 
