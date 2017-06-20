@@ -1,10 +1,11 @@
 from Domain.Actions.PredictPokemonFromLocationAction import PredictPokemonFromLocationAction
+from Domain.Actions.GetGymsNearLocationAction import GetGymsNearLocationAction
 from flask import Flask, json, request
 app = Flask(__name__)
 
 
 @app.route("/", methods=['GET'])
-def mail():
+def predict():
     lat = request.args.get('lat', '')
     lng = request.args.get('lng', '')
     if (lat == '') or (lng == ''):
@@ -18,6 +19,18 @@ def mail():
     return response
 
 
+@app.route("/gyms", methods=['GET'])
+def gyms():
+    lat = request.args.get('lat', '')
+    lng = request.args.get('lng', '')
+    if (lat == '') or (lng == ''):
+        return "Please Indicate a latitude and longitude in url 'http://localhost:5000/gyms?lat=41.3960&lng=2.204060'"
+
+    action = GetGymsNearLocationAction()
+    response = action.run(lat, lng)
+    return get_json_response(response)
+
+
 def format_response(lat, lng, response):
     data_response = {
         "input": {
@@ -27,9 +40,8 @@ def format_response(lat, lng, response):
             "terrain_type": "Urban and built-up",
             "close_to_water": "Yes",
             "poke_stop_distance": "pokestopIn250m",
-            "gym_distance": "gymIn500m",
+            "gym_distance": response['gym_distance'],
             "continent": "America",
-            "appeared_day_of_week": "dummy_day",
             "appeared_time_of_day": "night",
             "temperature": response['temperature'],
             "pressure": response['pressure'],
@@ -40,6 +52,10 @@ def format_response(lat, lng, response):
             **response['predictions']
         }
     }
+    return get_json_response(data_response)
+
+
+def get_json_response(data_response):
     response = app.response_class(
         response=json.dumps(data_response),
         status=200,

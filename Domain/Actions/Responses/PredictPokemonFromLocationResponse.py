@@ -1,4 +1,5 @@
 class PredictPokemonFromLocationResponse:
+    GymDistance = ''
     Temperature = ''
     Pressure = ''
     WindSpeed = ''
@@ -7,12 +8,14 @@ class PredictPokemonFromLocationResponse:
 
     def __init__(
             self,
+            gym_distance,
             temperature,
             pressure,
             wind_speed,
             weather_icon,
             predictions
     ):
+        self.GymDistance = gym_distance
         self.Temperature = temperature
         self.Pressure = pressure
         self.WindSpeed = wind_speed
@@ -21,6 +24,7 @@ class PredictPokemonFromLocationResponse:
 
     def get_response(self):
         return {
+            "gym_distance": self.GymDistance,
             "temperature": self.Temperature,
             "pressure": self.Pressure,
             "wind_speed": self.WindSpeed,
