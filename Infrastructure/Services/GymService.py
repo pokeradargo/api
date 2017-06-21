@@ -20,6 +20,5 @@ class GymService:
 
         return response
 
-    def has_gym_nearest(self, lat, lng, distance_meters):
-        gym = self.PostgresqlRepository.get_gym_nearest(lat, lng, distance_meters)
-        return gym is not None
+    def get_gym_nearest(self, lat, lng):
+        return self.PostgresqlRepository.get_gym_nearest(lat, lng)

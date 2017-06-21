@@ -8,17 +8,24 @@ class GymsPreProcessingAction:
         self.GymService = GymService()
 
     def run(self, lat, lng):
-        if self.GymService.has_gym_nearest(lat, lng, 100):
+        distance = None
+        gym_nearest = self.GymService.get_gym_nearest(lat, lng)
+
+        if gym_nearest is not None:
+            # convert distance to meters
+            distance = float(gym_nearest[0]) * 100000
+
+        if distance is not None and distance <= 100:
             return 'gymIn100m'
-        elif self.GymService.has_gym_nearest(lat, lng, 250):
+        elif distance is not None and distance <= 250:
             return 'gymIn250m'
-        elif self.GymService.has_gym_nearest(lat, lng, 500):
+        elif distance is not None and distance <= 500:
             return 'gymIn500m'
-        elif self.GymService.has_gym_nearest(lat, lng, 1000):
+        elif distance is not None and distance <= 1000:
             return 'gymIn1000m'
-        elif self.GymService.has_gym_nearest(lat, lng, 2500):
+        elif distance is not None and distance <= 2500:
             return 'gymIn2500m'
-        elif self.GymService.has_gym_nearest(lat, lng, 5000):
+        elif distance is not None and distance <= 5000:
             return 'gymIn5000m'
         else:
             return 'gymIn+5000m'
