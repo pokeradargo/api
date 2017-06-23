@@ -2,13 +2,13 @@ from Infrastructure.Repositories.PostgresqlRepository import PostgresqlRepositor
 
 
 class GymService:
-    PostgresqlRepository = None
+    _PostgresqlRepository = None
 
     def __init__(self):
-        self.PostgresqlRepository = PostgresqlRepository()
+        self._PostgresqlRepository = PostgresqlRepository()
 
     def get_gyms_near(self, lat, lng, distance_meters):
-        gyms_collection = self.PostgresqlRepository.get_gyms_near(lat, lng, distance_meters)
+        gyms_collection = self._PostgresqlRepository.get_gyms_near(lat, lng, distance_meters)
         response = {}
         for gym in gyms_collection:
             gym_info = {
@@ -21,4 +21,4 @@ class GymService:
         return response
 
     def get_gym_nearest(self, lat, lng):
-        return self.PostgresqlRepository.get_gym_nearest(lat, lng)
+        return self._PostgresqlRepository.get_gym_nearest(lat, lng)

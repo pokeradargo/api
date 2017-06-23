@@ -2,12 +2,12 @@ from elasticsearch import Elasticsearch
 
 
 class ElasticSearchRepository:
-    ServerIp = "pokeradar-elastic-master-dev.sandbox"
-    ServerPort = 9200
+    _ServerIp = "pokeradar-elastic-master-dev.sandbox"
+    _ServerPort = 9200
 
     def connect_to_database(self):
         return Elasticsearch(hosts={
-            self.ServerIp: self.ServerPort
+            self._ServerIp: self._ServerPort
         })
 
     def get_probability(self,

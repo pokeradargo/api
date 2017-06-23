@@ -2,27 +2,19 @@ from psycopg2 import psycopg1
 
 
 class PostgresqlRepository:
-    ServerIp = "pokeradar-postgresql-dev.sandbox"
-    ServerPort = "5432"
-    conn = None
-    cur = None
-
-    def connect_to_database(self):
-        self.conn = psycopg1.connect("host=" + self.ServerIp + " port=" + self.ServerPort + " dbname=postgres user=postgres")
-        self.cur = self.conn.cursor()
-
-    def close_connection_to_database(self):
-        self.cur.close()
-        self.conn.close()
+    _ServerIp = "pokeradar-postgresql-dev.sandbox"
+    _ServerPort = "5432"
+    _conn = None
+    _cur = None
 
     def get_gyms_near(self, lat, lng, distance_meters):
         distance = distance_meters / 100000
         query = "SELECT g.* FROM gyms AS g WHERE ST_Distance(g.position, ST_SetSRID(ST_MakePoint(%s, %s), 4326)) < %s"
         data = (lat, lng, distance)
-        self.connect_to_database()
-        self.cur.execute(query, data)
-        response = self.cur.fetchall()
-        self.close_connection_to_database()
+        self._connect_to_database()
+        self._cur.execute(query, data)
+        response = self._cur.fetchall()
+        self._close_connection_to_database()
         return response
 
     def get_gym_nearest(self, lat, lng):
@@ -37,9 +29,17 @@ class PostgresqlRepository:
                 "   FROM gyms AS g2" \
                 ")"
         data = (lat, lng, lat, lng)
-        self.connect_to_database()
-        self.cur.execute(query, data)
-        response = self.cur.fetchone()
-        self.close_connection_to_database()
+        self._connect_to_database()
+        self._cur.execute(query, data)
+        response = self._cur.fetchone()
+        self._close_connection_to_database()
 
         return response
+
+    def _connect_to_database(self):
+        self._conn = psycopg1.connect("host=" + self._ServerIp + " port=" + self._ServerPort + " dbname=postgres user=postgres")
+        self._cur = self._conn.cursor()
+
+    def _close_connection_to_database(self):
+        self._cur.close()
+        self._conn.close()

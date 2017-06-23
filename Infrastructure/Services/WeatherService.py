@@ -2,16 +2,16 @@ from Infrastructure.Services.CurlService import CurlService
 
 
 class WeatherService:
-    UrlService = 'https://api.darksky.net/forecast/'
-    Token = 'token'
-    CurlService = None
+    _UrlService = 'https://api.darksky.net/forecast/'
+    _Token = 'token'
+    _CurlService = None
 
     def __init__(self):
-        self.CurlService = CurlService()
+        self._CurlService = CurlService()
 
     def get_weather_data(self, lat, lng):
-        url = self.UrlService + self.Token + '/' + lat + ',' + lng
-        body = self.CurlService.get_json(url)
+        url = self._UrlService + self._Token + '/' + lat + ',' + lng
+        body = self._CurlService.get_json(url)
 
         temperature = body['currently']['temperature']
         pressure = body['currently']['pressure']

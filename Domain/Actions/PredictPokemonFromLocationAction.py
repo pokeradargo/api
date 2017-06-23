@@ -5,19 +5,19 @@ from Domain.Actions.GymsPreProcessingAction import GymsPreProcessingAction
 
 
 class PredictPokemonFromLocationAction:
-    WeatherPreProcessingAction = None
-    LocationPreProcessingAction = None
-    GymsPreProcessingAction = None
+    _WeatherPreProcessingAction = None
+    _LocationPreProcessingAction = None
+    _GymsPreProcessingAction = None
 
     def __init__(self):
-        self.WeatherPreProcessingAction = WeatherPreProcessingAction()
-        self.LocationPreProcessingAction = LocationPreProcessingAction()
-        self.GymsPreProcessingAction = GymsPreProcessingAction()
+        self._WeatherPreProcessingAction = WeatherPreProcessingAction()
+        self._LocationPreProcessingAction = LocationPreProcessingAction()
+        self._GymsPreProcessingAction = GymsPreProcessingAction()
 
     def run(self, lat, lng):
         # location = self.LocationPreProcessingAction.run(lat, lng)
-        gym = self.GymsPreProcessingAction.run(lat, lng)
-        weather = self.WeatherPreProcessingAction.run(lat, lng)
+        gym = self._GymsPreProcessingAction.run(lat, lng)
+        weather = self._WeatherPreProcessingAction.run(lat, lng)
 
         return PredictPokemonFromLocationResponse(
             gym,

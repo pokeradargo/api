@@ -2,10 +2,10 @@ from Infrastructure.Services.GymService import GymService
 
 
 class GetGymsNearLocationAction:
-    GymService = None
+    _GymService = None
 
     def __init__(self):
-        self.GymService = GymService()
+        self._GymService = GymService()
 
     def run(self, lat, lng):
-        return self.GymService.get_gyms_near(lat, lng, 500)
+        return self._GymService.get_gyms_near(lat, lng, 500)

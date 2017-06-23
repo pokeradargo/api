@@ -7,13 +7,13 @@ from Infrastructure.Services.WeatherService import WeatherService
 
 
 class WeatherPreProcessingAction:
-    WeatherService = None
+    _WeatherService = None
 
     def __init__(self):
-        self.WeatherService = WeatherService()
+        self._WeatherService = WeatherService()
 
     def run(self, lat, lng):
-        weather_data = self.WeatherService.get_weather_data(lat, lng)
+        weather_data = self._WeatherService.get_weather_data(lat, lng)
 
         temperature = TemperatureDefinitionService.get_temperature_definition(
             float(weather_data['temperature'])
