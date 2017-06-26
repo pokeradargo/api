@@ -36,6 +36,27 @@ class PostgresqlRepository:
 
         return response
 
+    def get_pokestop_nearest(self, lat, lng):
+        query = "SELECT " \
+                "   ST_Distance(ps.position, ST_SetSRID(ST_MakePoint(%s, %s), 4326)) AS distance," \
+                "   ps.* " \
+                "FROM pokestops AS ps " \
+                "WHERE ps.position = (" \
+                "   SELECT " \
+                "       ST_ClosestPoint(ST_Collect(ps2.position)," \
+                "       ST_SetSRID(ST_MakePoint(%s, %s), 4326)) " \
+                "   FROM pokestops AS ps2" \
+                ")"
+        data = (lat, lng, lat, lng)
+        self._connect_to_database()
+        self._cur.execute(query, data)
+        response = self._cur.fetchone()
+        self._close_connection_to_database()
+
+        return response
+
+
+
     def _connect_to_database(self):
         self._conn = psycopg1.connect("host=" + self._ServerIp + " port=" + self._ServerPort + " dbname=postgres user=postgres")
         self._cur = self._conn.cursor()
