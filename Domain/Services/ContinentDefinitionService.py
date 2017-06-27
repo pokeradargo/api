@@ -2,8 +2,6 @@ class ContinentDefinitionService:
     # see https://dev.maxmind.com/geoip/legacy/codes/iso3166/
     @staticmethod
     def get_continent_definition(country_code):
-        country_code = country_code.upper()
-        print(country_code)
         if country_code == 'US' \
                 or country_code == 'AR' \
                 or country_code == 'MX' \

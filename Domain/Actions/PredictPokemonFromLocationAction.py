@@ -4,7 +4,7 @@ from Domain.Actions.LocationPreProcessingAction import LocationPreProcessingActi
 from Domain.Actions.GymsPreProcessingAction import GymsPreProcessingAction
 from Domain.Actions.PokestopsPreProcessingAction import PokestopPreProcessingAction
 from Domain.Actions.AppearedTimeDayPreProcessingAction import AppearedTimeDayPreProcessingAction
-from Domain.Actions.LocationPreProcessingAction import LocationPreProcessingAction
+
 
 class PredictPokemonFromLocationAction:
     _WeatherPreProcessingAction = None
@@ -12,7 +12,6 @@ class PredictPokemonFromLocationAction:
     _GymsPreProcessingAction = None
     _PokestopPreProcessingAction = None
     _AppearedTimeDayPreProcessingAction = None
-    _LocationPreProcessingAction = None
 
     def __init__(self):
         self._WeatherPreProcessingAction = WeatherPreProcessingAction()

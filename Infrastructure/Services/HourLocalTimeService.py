@@ -9,6 +9,8 @@ class HourLocalTimeService:
         tf = TimezoneFinder()
         timezone_str = tf.timezone_at(lng=float(lng), lat=float(lat))
 
+        if timezone_str is None:
+            timezone_str = 'UTC'
         timezone = pytz.timezone(timezone_str)
         dt = datetime.datetime.now()
         localtime = dt.astimezone(timezone)
