@@ -1,4 +1,7 @@
 class PredictPokemonFromLocationResponse:
+    Urbanization = ''
+    TerrainType = ''
+    CloseToWater = ''
     AppearedTimeOfDay = ''
     PokestopDistance = ''
     GymDistance = ''
@@ -11,6 +14,9 @@ class PredictPokemonFromLocationResponse:
 
     def __init__(
             self,
+            urbanization,
+            terrain_type,
+            close_to_water,
             appeared_time_of_day,
             pokestop_distance,
             gym_distance,
@@ -21,6 +27,9 @@ class PredictPokemonFromLocationResponse:
             weather_icon,
             predictions
     ):
+        self.Urbanization = urbanization
+        self.TerrainType = terrain_type
+        self.CloseToWater = close_to_water
         self.AppearedTimeOfDay = appeared_time_of_day
         self.PokestopDistance = pokestop_distance
         self.GymDistance = gym_distance
@@ -33,6 +42,9 @@ class PredictPokemonFromLocationResponse:
 
     def get_response(self):
         return {
+            'urbanization': self.Urbanization,
+            'terrain_type': self.TerrainType,
+            'close_to_water': self.CloseToWater,
             'appeared_time_of_day': self.AppearedTimeOfDay,
             'poke_stop_distance': self.PokestopDistance,
             'gym_distance': self.GymDistance,

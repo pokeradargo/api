@@ -33,22 +33,22 @@ def gyms():
 
 def format_response(lat, lng, response):
     data_response = {
-        "input": {
-            "lat": lat,
-            "lng": lng,
-            "urbanization": "urban",
-            "terrain_type": "Urban and built-up",
-            "close_to_water": "Yes",
-            "poke_stop_distance": response['poke_stop_distance'],
-            "gym_distance": response['gym_distance'],
-            "continent": response['continent'],
-            "appeared_time_of_day": response['appeared_time_of_day'],
-            "temperature": response['temperature'],
-            "pressure": response['pressure'],
-            "wind_speed": response['wind_speed'],
-            "weather_icon": response['weather_icon']
+        'input': {
+            'lat': lat,
+            'lng': lng,
+            'urbanization': response['urbanization'],
+            'terrain_type': response['terrain_type'],
+            'close_to_water': response['close_to_water'],
+            'poke_stop_distance': response['poke_stop_distance'],
+            'gym_distance': response['gym_distance'],
+            'continent': response['continent'],
+            'appeared_time_of_day': response['appeared_time_of_day'],
+            'temperature': response['temperature'],
+            'pressure': response['pressure'],
+            'wind_speed': response['wind_speed'],
+            'weather_icon': response['weather_icon']
         },
-        "output": {
+        'output': {
             **response['predictions']
         }
     }

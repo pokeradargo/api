@@ -14,28 +14,45 @@ class ElasticSearchRepository:
                         urbanization,
                         terrain_type,
                         close_to_water,
-                        poke_stop_distance,
-                        gym_distance,
-                        continent,
-                        appeared_day_of_week,
                         appeared_time_of_day,
+                        pokestop,
+                        gym,
+                        continent,
                         temperature,
                         pressure,
                         wind_speed,
                         weather_icon
                         ):
         query = {
-            "query": {
-                "match_all": {
-
+            'query': {
+                'bool': {
+                    'must': [
+                        {'match': {'urbanization': urbanization}},
+                        {'match': {'terraintype': terrain_type}},
+                        {'match': {'closetowater': close_to_water}},
+                        {'match': {'appearedtimeofday': appeared_time_of_day}},
+                        {'match': {'pokestopdistance': pokestop}},
+                        {'match': {'gymdistance': gym}},
+                        {'match': {'continent': continent}},
+                        {'match': {'temperature': temperature}},
+                        {'match': {'pressure': pressure}},
+                        {'match': {'windspeed': wind_speed}},
+                        {'match': {'weathericon': weather_icon}}
+                    ]
                 }
             }
         }
+
         client = self.connect_to_database()
         res = client.search(
-            index="datainput",
+            index="dataoutput",
             doc_type="json",
             body=query
         )
+        response = {}
         for hit in res['hits']['hits']:
-            print("%(timestamp)s %(author)s: %(text)s" % hit["_source"])
+            response['pokemons'] = hit['_source']['predictedpokemons']
+            response['accumulatedprediction'] = hit['_source']['accumulatedprediction']
+            break
+
+        return response

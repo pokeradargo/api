@@ -2,19 +2,19 @@ from psycopg2 import psycopg1
 
 
 class PostgresqlRepository:
-    _ServerIp = "pokeradar-postgresql-dev.sandbox"
-    _ServerPort = "5432"
-    _conn = None
-    _cur = None
+    __ServerIp = "pokeradar-postgresql-dev.sandbox"
+    __ServerPort = "5432"
+    __conn = None
+    __cur = None
 
     def get_gyms_near(self, lat, lng, distance_meters):
         distance = distance_meters / 100000
         query = "SELECT g.* FROM gyms AS g WHERE ST_Distance(g.position, ST_SetSRID(ST_MakePoint(%s, %s), 4326)) < %s"
         data = (lat, lng, distance)
-        self._connect_to_database()
-        self._cur.execute(query, data)
-        response = self._cur.fetchall()
-        self._close_connection_to_database()
+        self.__connect_to_database()
+        self.__cur.execute(query, data)
+        response = self.__cur.fetchall()
+        self.__close_connection_to_database()
         return response
 
     def get_gym_nearest(self, lat, lng):
@@ -29,10 +29,10 @@ class PostgresqlRepository:
                 "   FROM gyms AS g2" \
                 ")"
         data = (lat, lng, lat, lng)
-        self._connect_to_database()
-        self._cur.execute(query, data)
-        response = self._cur.fetchone()
-        self._close_connection_to_database()
+        self.__connect_to_database()
+        self.__cur.execute(query, data)
+        response = self.__cur.fetchone()
+        self.__close_connection_to_database()
 
         return response
 
@@ -48,19 +48,34 @@ class PostgresqlRepository:
                 "   FROM pokestops AS ps2" \
                 ")"
         data = (lat, lng, lat, lng)
-        self._connect_to_database()
-        self._cur.execute(query, data)
-        response = self._cur.fetchone()
-        self._close_connection_to_database()
+        self.__connect_to_database()
+        self.__cur.execute(query, data)
+        response = self.__cur.fetchone()
+        self.__close_connection_to_database()
 
         return response
 
+    def get_pokemon_info(self, pokemon_list):
+        pokemon_list = pokemon_list.split(',')
+        pokemon_list = [int(i) for i in pokemon_list]
 
+        query = "SELECT " \
+                "id, " \
+                "name " \
+                "FROM pokemons " \
+                "WHERE id in %(ids)s"
+        self.__connect_to_database()
+        self.__cur.execute(query, {'ids': tuple(pokemon_list)})
+        response = self.__cur.fetchall()
+        self.__close_connection_to_database()
 
-    def _connect_to_database(self):
-        self._conn = psycopg1.connect("host=" + self._ServerIp + " port=" + self._ServerPort + " dbname=postgres user=postgres")
-        self._cur = self._conn.cursor()
+        return response
 
-    def _close_connection_to_database(self):
-        self._cur.close()
-        self._conn.close()
+    def __connect_to_database(self):
+        self.__conn = psycopg1.connect(
+            "host=" + self.__ServerIp + " port=" + self.__ServerPort + " dbname=postgres user=postgres")
+        self.__cur = self.__conn.cursor()
+
+    def __close_connection_to_database(self):
+        self.__cur.close()
+        self.__conn.close()
