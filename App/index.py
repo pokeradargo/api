@@ -41,7 +41,7 @@ def format_response(lat, lng, response):
             "close_to_water": "Yes",
             "poke_stop_distance": response['poke_stop_distance'],
             "gym_distance": response['gym_distance'],
-            "continent": "America",
+            "continent": response['continent'],
             "appeared_time_of_day": response['appeared_time_of_day'],
             "temperature": response['temperature'],
             "pressure": response['pressure'],

@@ -4,7 +4,7 @@ from Domain.Actions.LocationPreProcessingAction import LocationPreProcessingActi
 from Domain.Actions.GymsPreProcessingAction import GymsPreProcessingAction
 from Domain.Actions.PokestopsPreProcessingAction import PokestopPreProcessingAction
 from Domain.Actions.AppearedTimeDayPreProcessingAction import AppearedTimeDayPreProcessingAction
-
+from Domain.Actions.LocationPreProcessingAction import LocationPreProcessingAction
 
 class PredictPokemonFromLocationAction:
     _WeatherPreProcessingAction = None
@@ -12,6 +12,7 @@ class PredictPokemonFromLocationAction:
     _GymsPreProcessingAction = None
     _PokestopPreProcessingAction = None
     _AppearedTimeDayPreProcessingAction = None
+    _LocationPreProcessingAction = None
 
     def __init__(self):
         self._WeatherPreProcessingAction = WeatherPreProcessingAction()
@@ -19,9 +20,10 @@ class PredictPokemonFromLocationAction:
         self._GymsPreProcessingAction = GymsPreProcessingAction()
         self._PokestopPreProcessingAction = PokestopPreProcessingAction()
         self._AppearedTimeDayPreProcessingAction = AppearedTimeDayPreProcessingAction()
+        self._LocationPreProcessingAction = LocationPreProcessingAction()
 
     def run(self, lat, lng):
-        # location = self.LocationPreProcessingAction.run(lat, lng)
+        location = self._LocationPreProcessingAction.run(lat, lng)
         appeared_time_of_day = self._AppearedTimeDayPreProcessingAction.run(lat, lng)
         pokestop = self._PokestopPreProcessingAction.run(lat, lng)
         gym = self._GymsPreProcessingAction.run(lat, lng)
@@ -31,6 +33,7 @@ class PredictPokemonFromLocationAction:
             appeared_time_of_day,
             pokestop,
             gym,
+            location['continent'],
             weather['temperature'],
             weather['pressure'],
             weather['wind_speed'],

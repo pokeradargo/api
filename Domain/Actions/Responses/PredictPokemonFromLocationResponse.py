@@ -2,6 +2,7 @@ class PredictPokemonFromLocationResponse:
     AppearedTimeOfDay = ''
     PokestopDistance = ''
     GymDistance = ''
+    Continent = ''
     Temperature = ''
     Pressure = ''
     WindSpeed = ''
@@ -13,6 +14,7 @@ class PredictPokemonFromLocationResponse:
             appeared_time_of_day,
             pokestop_distance,
             gym_distance,
+            continent,
             temperature,
             pressure,
             wind_speed,
@@ -22,6 +24,7 @@ class PredictPokemonFromLocationResponse:
         self.AppearedTimeOfDay = appeared_time_of_day
         self.PokestopDistance = pokestop_distance
         self.GymDistance = gym_distance
+        self.Continent = continent
         self.Temperature = temperature
         self.Pressure = pressure
         self.WindSpeed = wind_speed
@@ -33,6 +36,7 @@ class PredictPokemonFromLocationResponse:
             'appeared_time_of_day': self.AppearedTimeOfDay,
             'poke_stop_distance': self.PokestopDistance,
             'gym_distance': self.GymDistance,
+            'continent': self.Continent,
             'temperature': self.Temperature,
             'pressure': self.Pressure,
             'wind_speed': self.WindSpeed,
