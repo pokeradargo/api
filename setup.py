@@ -62,13 +62,12 @@ setup(
 
     # Alternatively, if you want to distribute just a my_module.py, uncomment
     # this:
-    # py_modules=["api-pokemongo-predictor"],
 
     # List run-time dependencies here.  These will be installed by pip when
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['flask', 'elasticsearch', 'pycurl', 'psycopg2', 'pytz', 'timezonefinder', 'geopy', 'flask-cors'],
+    install_requires=['Flask', 'elasticsearch', 'pycurl', 'psycopg2', 'pytz', 'timezonefinder', 'geopy', 'Flask-Cors'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
