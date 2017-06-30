@@ -14,6 +14,8 @@ class WeatherService:
         body = self._CurlService.get_json(url)
 
         temperature = body['currently']['temperature']
+        # Convert degrees Fahrenheit temperature to degrees Celsius:
+        temperature = (temperature - 32) * 5 / 9
         pressure = body['currently']['pressure']
         wind_speed = body['currently']['windSpeed']
         weather_icon = body['currently']['icon']
